@@ -1,0 +1,21 @@
+# Build output
+target/
+*.jar.original
+
+# Local credentials（真实密钥只放本地，不入库）
+application-local.yml
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

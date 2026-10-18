@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: plant-site-api
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    # 数据库连接通过环境变量注入（本地可配置 application-local.yml，勿提交真实凭证）
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres?stringtype=unspecified&currentSchema=public&sslmode=require}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:}
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 25MB
+  jackson:
+    # OffsetDateTime 序列化为 ISO-8601 字符串
+    serialization:
+      write-dates-as-timestamps: false
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    # 开发期打印 SQL，生产可移除
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    banner: false
+
+aws:
+  s3:
+    region: ap-southeast-1
+    bucket: plant-site
+    # 凭证通过环境变量注入；留空则走 AWS 默认凭证链（环境变量 / ~/.aws/credentials / IAM Role）
+    access-key: ${AWS_ACCESS_KEY_ID:}
+    secret-key: ${AWS_SECRET_ACCESS_KEY:}
+    # 预签名 URL 有效期（分钟）
+    presign-expire-minutes: 10
+    # 上传默认目录
+    default-dir: picture
+
+logging:
+  level:
+    com.plantsite: debug
